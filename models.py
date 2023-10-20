@@ -15,7 +15,7 @@ def connect_db(app):
     db.init_app(app)
 
 
-class Users(db.Model):
+class User(db.Model):
     __tablename__ = "user"
     username = db.Column(
         db.String(20),
@@ -47,7 +47,7 @@ class Users(db.Model):
     @classmethod
     def authenticate(cls, username, password):
 
-        user = Users.query.filter_by(username=username).first()
+        user = User.query.filter_by(username=username).first()
 
         if user and bcrypt.check_password_hash(user.password, password):
             return user

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, session
 from werkzeug.exceptions import Unauthorized
-from models import connect_db, db, Users, Feedback
+from models import connect_db, db, User, Feedback
 from forms import RegisterForm, LoginForm, FeedbackForm, DeleteForm
 
 app = Flask(__name__)
@@ -36,7 +36,7 @@ def register():
         last_name = form.last_name.data
         email = form.email.data
 
-        user = Users.register(username, password, first_name, last_name, email)
+        user = User.register(username, password, first_name, last_name, email)
 
         db.session.commit()
         session['username'] = user.username
@@ -59,7 +59,7 @@ def login():
         username = form.username.data
         password = form.password.data
 
-        user = Users.authenticate(username, password)  # <User> or False
+        user = User.authenticate(username, password)  # <User> or False
         if user:
             session['username'] = user.username
             return redirect(f"/users/{user.username}")
@@ -83,7 +83,7 @@ def show_user(username):
     if "username" not in session or username != session['username']:
         raise Unauthorized()
 
-    user = Users.query.get(username)
+    user = User.query.get(username)
     form = DeleteForm()
 
     return render_template("users/show.html", user=user, form=form)
@@ -95,7 +95,7 @@ def remove_user(username):
     if "username" not in session or username != session['username']:
         raise Unauthorized()
 
-    user = Users.query.get(username)
+    user = User.query.get(username)
     db.session.delete(user)
     db.session.commit()
     session.pop("username")
