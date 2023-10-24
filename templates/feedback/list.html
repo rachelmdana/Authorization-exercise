@@ -7,7 +7,7 @@
 <ul>
     {% for feedback in feedback_list %}
     <li>
-        <a href="{{ url_for('feedback_detail', feedback_id=feedback.id) }}">View Details</a>
+        <a href="{{ url_for('edit_feedback', feedback_id=feedback.id) }}">Edit Feedback</a>
     </li>
     {% endfor %}
 </ul>
