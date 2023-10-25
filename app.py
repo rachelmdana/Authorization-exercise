@@ -10,7 +10,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///auth_db"
 app.config['SECRET_KEY'] = 'spookforprez'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 app.debug = True
 
@@ -18,7 +18,6 @@ connect_db(app)
 db.create_all()
 
 toolbar = DebugToolbarExtension(app)
-# debug = DebugToolbarExtension(app)
 
 
 @app.route("/")
